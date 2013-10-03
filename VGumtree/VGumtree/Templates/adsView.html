@@ -1,0 +1,66 @@
+﻿<div id="searchDiv" >
+    <form name="searchForm" novalidate data-ng-submit="search()">
+        <fieldset>
+            <legend>Search Form</legend>
+            <div class="span3">
+                <label for="Category">Category</label>        
+                <select name="Category" data-ng-model="searchData.selectedCategoryId" data-ng-options="cat.Id as cat.Name for cat in categories" data-ng-change="resetSubCategoryId();search()" >
+                    <option value="">-- All Categories --</option>
+                </select>
+            </div>
+            <div class="span3" data-ng-show="searchData.selectedCategoryId">
+                <label for="SubCategory">Sub Category</label>
+                <select name="SubCategory" data-ng-model="searchData.selectedSubCategoryId" data-ng-options="subCat.Id as subCat.Name for subCat in subCategories | filter:{ CategoryId:searchData.selectedCategoryId }" data-ng-change="search()">
+                    <option value="">-- All Sub-categories --</option>
+                </select>
+            </div>
+            
+            <div class="span3">
+                <label for="Province">Province</label>        
+                <select name="Province" data-ng-model="searchData.adminAreaLevel1Id" data-ng-options="level1.Id as level1.Name for level1 in adminAreaLevel1s" data-ng-change="resetAdminAreaLevel2Id();search()" >
+                    <option value="">-- All Provinces --</option>
+                </select>                
+            </div>
+            <div class="span3" data-ng-show="searchData.adminAreaLevel1Id">
+                <label for="District">City/District</label>
+                <select name="District" data-ng-model="searchData.adminAreaLevel2Id" data-ng-options="level2.Id as level2.Name for level2 in adminAreaLevel2s | filter:{ AdminAreaLevel1Id:searchData.adminAreaLevel1Id }" data-ng-change="search()">
+                    <option value="">-- All Cities/Districts --</option>
+                </select>                
+            </div>
+
+            <div class="span3">
+                <label for="Keyword">Keyword</label>
+                <input name="Keyword" type="text" data-ng-model="searchData.keyword" data-ng-change="search()" class="span3"/>
+            </div>
+
+            <div>
+                <input type="submit" class="btn" value="Search" />
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+
+<div class="sortBy">
+    <label for="sortBy">Sort By:</label>
+    <select name="sortBy" data-ng-model="sortBy">
+        <option value="CreatedDate">Created Date</option>
+        <option value="Price">Price</option>
+        <option value="ExpiryDate">Expiry Date</option>
+    </select>
+</div>
+
+
+<!-- TODO: search by categories and subcategories -->
+<div data-ng-repeat="i in data | filter:keyword | orderBy:sortBy" class="span12">
+    <div><a data-ng-href="#/ad/{{ i.Id }}">Name: {{ i.Name }} </a></div>
+    <div>Desc: {{ i.Description }} </div>
+    <div>Created Date: {{ i.CreatedDate }} </div>
+    <div>Expiry Date: {{ i.ExpiryDate }} </div>
+    <div>Price: {{ i.Price }} </div>
+    <hr />
+</div>
+
+<div class="span12">
+    <a href="#/newad" class="btn">Create new ad</a>
+</div>

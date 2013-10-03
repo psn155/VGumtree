@@ -1,0 +1,104 @@
+﻿<form name="newAdForm" novalidate data-ng-submit="save()">
+    <div class="span3">
+        <label for="Category">Category</label>        
+        <select name="Category" data-ng-model="selectedCategoryId" data-ng-options="cat.Id as cat.Name for cat in categories" data-ng-change="resetSubCategoryId()" required>
+            <option value="">-- Choose a Category --</option>
+        </select>
+        <span class="error" data-ng-show="newAdForm.Category.$error.required">*</span>
+    </div>
+    <div class="span3">
+        <label for="SubCategory">Sub Category</label>
+        <select name="SubCategory" data-ng-model="selectedSubCategoryId" data-ng-options="subCat.Id as subCat.Name for subCat in subCategories | filter:{ CategoryId:selectedCategoryId }" required data-ng-change="updateAttributes()">
+            <option value="">-- Choose a Sub-category --</option>
+        </select>
+        <span class="error" data-ng-show="newAdForm.SubCategory.$error.required">*</span>
+    </div>
+    <div class="span3">
+        <label for="Name">Name</label>
+        <input name="Name" type="text" data-ng-model="newAd.Name" required/>
+        <span class="error" data-ng-show="newAdForm.Name.$error.required">*</span>
+    </div>
+    <div class="span3">
+        <label for="Description">Description</label>
+        <textarea name="Description" rows="5" cols="30" data-ng-model="newAd.Description" required/>
+        <span class="error" data-ng-show="newAdForm.Description.$error.required">*</span>
+    </div>
+    <div class="span3">
+        <label for="ExpiryDate">Expiry Date</label>
+        <input name="ExpiryDate" type="date" data-ng-model="newAd.ExpiryDate"/>
+    </div>
+    <div class="span3">
+        <label for="Condition">Condition</label>
+        <input name="Condition" type="text" data-ng-model="newAd.Condition"/>
+    </div>
+    <div class="span3">
+        <label for="ContactPhone">Contact Phone</label>
+        <input name="ContactPhone" type="text" data-ng-model="newAd.ContactPhone"/>
+    </div>
+    <div class="span3">
+        <label for="ContactEmail">Contact Email</label>
+        <input name="ContactEmail" type="email" data-ng-model="newAd.ContactEmail" required/>
+        <span class="error" data-ng-show="newAdForm.ContactEmail.$error.required">*</span>
+        <span class="error" data-ng-show="newAdForm.ContactEmail.$error.email">Not valid email!</span>
+    </div>
+    <div class="span3">
+        <label for="Price">Price</label>
+        <input name="Price" type="text" data-ng-model="newAd.Price"/>
+    </div>
+    
+    <div class="span12">
+        <span class="span12">Additional information:</span>
+        <div class="span2 additionalInfor" data-ng-repeat="attr in attributes">
+            <span>{{ attr.Name }}</span>
+            <input type="text" name="{{ attr.Name }}" data-ng-model="attr.Value"/>            
+        </div>
+    </div>               
+
+    <div class="span12">
+        <input type="submit" class="btn" value="Save" data-ng-disabled="newAdForm.$invalid" />
+        <a href="#/" class="btn">Cancel</a>
+    </div>
+</form>
+
+<div class="imageUploadContainer span12">
+    <form name="imageUploadForm" method="post" enctype="multipart/form-data">
+        <!--
+        <button id="uploadBtn" data-ng-click="uploadImage()" class="btn btn-mini push-down">
+            <i class="icon-upload"></i>
+            Upload Image
+        </button>-->
+
+        <div data-file-input="file" data-on-change="readFile()"></div> 
+        <!--<input type="file" data-file-input="file" multiple data-on-change="readFile()"/>-->
+        <img class="main-image" data-ng-src="{{imageSrc}}" height="200" width="200"/>
+        <div data-ng-repeat="item in photos" class="span1">
+            <img class="thumbnail" data-ng-src="{{ item }}" height="100" width="100" data-ng-click="updateImage($index)"/>
+            <div class="icon-remove" data-ng-click="deleteImage($index)"></div>
+        </div>
+                
+    </form>
+
+</div>
+
+<div class="span3">
+    <h3>Address:</h3>
+    <label for="StreetAddr">Street Address</label>
+    <input name="StreetAddr" type="text" data-ng-model="StreetAddress" />
+
+    <label for="District">District</label>
+    <input name="District" type="text" data-ng-model="District" />
+
+    <label for="Province">Province</label>
+    <input name="Province" type="text" data-ng-model="Province" />
+
+    <label for="Country">Country</label>
+    <input name="Country" type="text" data-ng-model="Country" />
+
+    <label for="FormattedAddress">Formatted Address</label>
+    <select name="FormattedAddress" data-ng-model="selectedAddress" data-ng-options="addr as addr.formatted_address for addr in formattedAddresses" >
+        <option value="">-- Use address as enterred --</option>
+    </select>    
+    
+    <button data-ng-click="getGoogleAddresses()" class="btn">Validate Address</button>
+</div>
+

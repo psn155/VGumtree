@@ -1,0 +1,8 @@
+C:\Nguyen\Self\VGumtree\VGumtree.Model\bin\Debug\VGumtree.Model.dll.config
+C:\Nguyen\Self\VGumtree\VGumtree.Model\bin\Debug\VGumtree.Model.dll
+C:\Nguyen\Self\VGumtree\VGumtree.Model\bin\Debug\VGumtree.Model.pdb
+C:\Nguyen\Self\VGumtree\VGumtree.Model\bin\Debug\EntityFramework.dll
+C:\Nguyen\Self\VGumtree\VGumtree.Model\bin\Debug\EntityFramework.xml
+C:\Nguyen\Self\VGumtree\VGumtree.Model\obj\Debug\VGumtree.Model.csprojResolveAssemblyReference.cache
+C:\Nguyen\Self\VGumtree\VGumtree.Model\obj\Debug\VGumtree.Model.dll
+C:\Nguyen\Self\VGumtree\VGumtree.Model\obj\Debug\VGumtree.Model.pdb

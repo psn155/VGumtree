@@ -1,0 +1,24 @@
+﻿
+<div class="sortBy">
+    <label for="sortBy">Sort By:</label>
+    <select name="sortBy" data-ng-model="sortBy">
+        <option value="CreatedDate">Created Date</option>
+        <option value="Price">Price</option>
+        <option value="ExpiryDate">Expiry Date</option>
+    </select>
+</div>
+
+
+<!-- TODO: search by categories and subcategories -->
+<div data-ng-repeat="i in myAds | filter:keyword | orderBy:sortBy" class="span12">
+    <div><a data-ng-href="#/ad/{{ i.Id }}">Name: {{ i.Name }} </a></div>
+    <div>Desc: {{ i.Description }} </div>
+    <div>Created Date: {{ i.CreatedDate }} </div>
+    <div>Expiry Date: {{ i.ExpiryDate }} </div>
+    <div>Price: {{ i.Price }} </div>
+    <hr />
+</div>
+
+<div class="span12">
+    <a href="#/newad" class="btn">Create new ad</a>
+</div>

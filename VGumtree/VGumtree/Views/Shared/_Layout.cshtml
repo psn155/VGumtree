@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-ng-app="adAppModule">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - VGumtree</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400">
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans">
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lobster">
+        @Styles.Render("~/Content/css")
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+
+        @Scripts.Render("~/bundles/modernizr")
+        
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="~/Content/assets/ico/favicon.ico">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="~/Content/assets/ico/apple-touch-icon-57-precomposed.png">
+    </head>
+    <body>
+        <!-- Header -->
+        <div class="container">
+            <div class="header row">
+                <div class="span12">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </a>
+                            <h1>
+                                <a href="#/" class="brand">Welcome to VGumtree</a>
+                            </h1>
+                            @{
+                                bool isRootUrl = Request.Url.PathAndQuery == "/";
+                                string rootUrl = isRootUrl ? "" : HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/");
+                            }
+                            <div class="nav-collapse collapse">
+                                <ul class="nav pull-right">
+                                    <li class="current-page">       
+                                        <a href="@rootUrl#/"><i class="icon-home"></i><br />Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="@rootUrl#/fav"><i class="icon-heart"></i><br />Favourite</a>
+                                    </li>
+                                    <!-- TODO: need to redirect to Login page if not logged in and redirect back to the My Ads page after logging in -->
+                                    <li><!--data-ng-show="userId">-->
+                                        <a href="@rootUrl#/myads"><i class="icon-th"></i><br />My Ads</a>                                                                           
+                                    </li>
+                                    @*<li>
+                                        <a href="@Url.Action("Index", "Home")"><i class="icon-tasks"></i><br />Services</a>
+                                    </li>*@
+                                    @*<li>
+                                        <a href="@Url.Action("About", "Home")"><i class="icon-book"></i><br />About</a>
+                                    </li>*@
+                                    <li>
+                                        <a href="@rootUrl#/contact"><i class="icon-envelope-alt"></i><br />Contact</a>
+                                    </li>
+
+                                    @*@Html.Partial("_LoginPartial")*@                              
+                                    @if (Request.IsAuthenticated) {
+                                        <li>
+                                            Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
+                                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+                                                @Html.AntiForgeryToken()
+                                                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                                            }
+                                            @* Add below two hidden inputs to store the username and user role so that they can be bound to angular scope fields --> *@
+                                            <input id="userId" type="text" value="@ViewBag.UserId" style="display:none" />
+                                            <input id="userRole" type="text" value="@ViewBag.UserRole" style="display:none"/>
+                                        </li>
+                                    } else {
+                                        <li>
+                                            <a href="@Url.Action("Register", "Account")"><i class="icon-user"></i><br />Register</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("Login", "Account")"><i class="icon-user-md"></i><br />Log in</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Body -->
+        <div id="body">
+            @RenderBody()
+        </div>
+
+        <!-- Footer -->
+        @*<footer>
+            <div class="container">
+                <div class="row">
+                    <div class="widget span3">
+                        <h4>About Us</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                        <p><a href="">Read more...</a></p>
+                    </div>
+                    <div class="widget span3">
+                        <h4>Latest Tweets</h4>
+                        <div class="show-tweets"></div>
+                    </div>
+                    <div class="widget span3">
+                        <h4>Flickr Photos</h4>
+                        <ul class="flickr-feed"></ul>
+                    </div>
+                    <div class="widget span3">
+                        <h4>Contact Us</h4>
+                        <p><i class="icon-map-marker"></i> Address: Vietnam</p>
+                        <p><i class="icon-phone"></i> Phone: +84 333 12 68 347</p>
+                        <p><i class="icon-user"></i> Skype: VGumtree</p>
+                        <p><i class="icon-envelope-alt"></i> Email: <a href="">contact@vgumtree.com.vn</a></p>
+                    </div>
+                </div>
+                <div class="footer-border"></div>
+                <div class="row">
+                    <div class="copyright span4">
+                        <p>Copyright 2013 VGumtree - All rights reserved.</p>
+                    </div>
+                    <div class="social span8">
+                        <a class="facebook" href=""></a>
+                        <a class="dribbble" href=""></a>
+                        <a class="twitter" href=""></a>
+                        <a class="pinterest" href=""></a>
+                    </div>
+                </div>
+            </div>
+        </footer>*@
+
+        @Scripts.Render("~/bundles/jquery")        
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

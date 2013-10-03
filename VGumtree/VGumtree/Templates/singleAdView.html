@@ -1,0 +1,29 @@
+﻿<div class="imageContainer span12">    
+    <div id="main-image">
+        <img class="main-image" data-ng-src="{{imageUploadFolder}}{{imageSrc}}" data-ng-show="hasImages()" height="200" width="200"/>
+    </div>
+    <div id="thumbnail-image" data-ng-repeat="item in ad.Photos" class="span1">
+        <img class="thumbnail" data-ng-src="{{imageUploadFolder}}{{ item.Url }}" height="100" width="100" data-ng-click="updateImage($index)"/>
+    </div>
+   
+</div>
+
+<div>
+    <div>Name: {{ ad.Name }}</div>
+    <div>Desc: {{ ad.Description }} </div>
+    <div>Created Date: {{ ad.CreatedDate }}</div>
+    <div>Modified Date: {{ ad.ModifiedDate }}</div>
+    <div>Expiry Date: {{ ad.ExpiryDate }}</div>
+    <div>Condition: {{ ad.Condition }}</div>    
+    <div>Contact Phone: {{ ad.ContactPhone }}<span class="btn btn-small" data-ng-click="showPhone()">Show number...</span></div>
+    <div>Contact Email: {{ ad.ContactEmail }}</div>
+    <div>Price: {{ ad.Price }}</div>
+    <div>
+        Additional information:
+        <div data-ng-repeat="attr in attributes">
+            <span>{{ attr.Attribute.Name }} : {{ attr.Value }}</span>
+        </div>
+    </div>
+</div>
+<button data-ng-click="delete()" class="btn" data-ng-show="canDelete">Delete</button>
+<a href="#/" class="btn">Cancel</a>
