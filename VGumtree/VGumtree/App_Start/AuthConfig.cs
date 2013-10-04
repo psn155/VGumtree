@@ -19,12 +19,12 @@ namespace VGumtree
             //    clientSecret: "");
 
             OAuthWebSecurity.RegisterTwitterClient(
-                consumerKey: "VFhO6vgkBSgvkAlCtiD2gQ",
-                consumerSecret: "ojxwOpkpehlVAYcUpWJ3SQCwC20BEOqpNhk41PSdRg");
+                consumerKey: "___",
+                consumerSecret: "___");
 
             OAuthWebSecurity.RegisterFacebookClient(
-                appId: "572848439419608",
-                appSecret: "bb73d991a53edd25d9e3c8859622388f");
+                appId: "___",
+                appSecret: "___");
 
             OAuthWebSecurity.RegisterGoogleClient();
         }
